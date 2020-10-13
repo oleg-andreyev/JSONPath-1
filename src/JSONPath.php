@@ -25,19 +25,31 @@ use function reset;
 
 class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
 {
+    /**
+     * @var array
+     */
     protected static $tokenCache = [];
 
+    /**
+     * @var mixed
+     */
     protected $data;
 
+    /**
+     * @var int
+     */
     protected $options;
 
+    /**
+     * @var bool|int
+     */
     public const ALLOW_MAGIC = 1;
 
     /**
-     * @param $data
+     * @param array|object|null $data
      * @param int $options
      */
-    public function __construct($data = null, $options = 0)
+    final public function __construct($data = null, $options = 0)
     {
         $this->data = $data;
         $this->options = $options;
@@ -46,11 +58,11 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     /**
      * Evaluate an expression
      *
-     * @param $expression
+     * @param string $expression
      * @return JSONPath
      * @throws Exception
      */
-    public function find($expression): self
+    public function find(string $expression): self
     {
         $tokens = $this->parseTokens($expression);
 
@@ -139,11 +151,11 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     }
 
     /**
-     * @param $expression
+     * @param string $expression
      * @return array
      * @throws Exception
      */
-    public function parseTokens($expression): array
+    public function parseTokens(string $expression): array
     {
         $cacheKey = md5($expression);
 
@@ -160,23 +172,24 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     }
 
     /**
-     * @return mixed
+     * @return array|null
      */
-    public function getData()
+    public function getData(): ?array
     {
         return $this->data;
     }
 
     /**
      * @deprecated Please use getData()
+     * @return array|null
      */
-    public function data()
+    public function data(): ?array
     {
         return $this->getData();
     }
 
     /**
-     * @param $data
+     * @param mixed $data
      * @return $this
      */
     public function setData($data): self
@@ -187,7 +200,7 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     }
 
     /**
-     * @param mixed $offset
+     * @param string|int $offset
      * @return bool
      */
     public function offsetExists($offset): bool
@@ -196,8 +209,8 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     }
 
     /**
-     * @param mixed $offset
-     * @return $this|mixed
+     * @param string|int $offset
+     * @return mixed
      */
     public function offsetGet($offset)
     {
@@ -209,7 +222,7 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     }
 
     /**
-     * @param mixed $offset
+     * @param string|int|null $offset
      * @param mixed $value
      */
     public function offsetSet($offset, $value): void
@@ -222,7 +235,7 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     }
 
     /**
-     * @param mixed $offset
+     * @param string|int $offset
      */
     public function offsetUnset($offset): void
     {
@@ -230,9 +243,9 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     }
 
     /**
-     * @return mixed
+     * @return array|null
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): ?array
     {
         return $this->data;
     }
@@ -286,7 +299,7 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     }
 
     /**
-     * @param $key
+     * @param string|int $key
      * @return mixed
      * @noinspection MagicMethodsValidityInspection
      */

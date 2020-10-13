@@ -20,12 +20,7 @@ abstract class AbstractFilter
     protected $token;
 
     /**
-     * @var  int
-     */
-    protected $options;
-
-    /**
-     * @var  bool
+     * @var  bool|int
      */
     protected $magicIsAllowed;
 
@@ -33,13 +28,11 @@ abstract class AbstractFilter
      * AbstractFilter constructor.
      *
      * @param JSONPathToken $token
-     * @param int $options
      */
-    public function __construct(JSONPathToken $token, $options = 0)
+    public function __construct(JSONPathToken $token)
     {
         $this->token = $token;
-        $this->options = $options;
-        $this->magicIsAllowed = $this->options & JSONPath::ALLOW_MAGIC;
+        $this->magicIsAllowed = JSONPath::ALLOW_MAGIC;
     }
 
     /**

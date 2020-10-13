@@ -26,17 +26,24 @@ class JSONPathToken
     public const T_SLICE = 'slice';
     public const T_INDEXES = 'indexes';
 
+    /**
+     * @var string
+     */
     public $type;
+
+    /**
+     * @var string|array|null
+     */
     public $value;
 
     /**
      * JSONPathToken constructor.
      *
-     * @param $type
-     * @param $value
+     * @param string $type
+     * @param string|array|null $value
      * @throws JSONPathException
      */
-    public function __construct($type, $value)
+    public function __construct(string $type, $value)
     {
         $this->validateType($type);
 
@@ -45,10 +52,10 @@ class JSONPathToken
     }
 
     /**
-     * @param $type
+     * @param string $type
      * @throws JSONPathException
      */
-    public function validateType($type): void
+    public function validateType(string $type): void
     {
         if (!in_array($type, static::getTypes(), true)) {
             throw new JSONPathException('Invalid token: ' . $type);
@@ -71,11 +78,10 @@ class JSONPathToken
     }
 
     /**
-     * @param $options
      * @return mixed
      * @throws JSONPathException
      */
-    public function buildFilter($options)
+    public function buildFilter()
     {
         $filterClass = 'Flow\\JSONPath\\Filters\\' . ucfirst($this->type) . 'Filter';
 
@@ -83,6 +89,6 @@ class JSONPathToken
             throw new JSONPathException("No filter class exists for token [{$this->type}]");
         }
 
-        return new $filterClass($this, $options);
+        return new $filterClass($this);
     }
 }

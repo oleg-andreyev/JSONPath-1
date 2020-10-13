@@ -25,7 +25,7 @@ use function property_exists;
 class AccessHelper
 {
     /**
-     * @param $collection
+     * @param object|array $collection
      * @return array
      */
     public static function collectionKeys($collection): array
@@ -38,7 +38,7 @@ class AccessHelper
     }
 
     /**
-     * @param $collection
+     * @param mixed $collection
      * @return bool
      */
     public static function isCollectionType($collection): bool
@@ -47,9 +47,9 @@ class AccessHelper
     }
 
     /**
-     * @param $collection
-     * @param $key
-     * @param false $magicIsAllowed
+     * @param object|array $collection
+     * @param string|int $key
+     * @param bool $magicIsAllowed
      * @return bool
      */
     public static function keyExists($collection, $key, $magicIsAllowed = false): bool
@@ -64,9 +64,7 @@ class AccessHelper
 
         if (is_array($collection) || $collection instanceof ArrayAccess) {
             return array_key_exists($key, $collection);
-        }
-
-        if (is_object($collection)) {
+        } elseif (is_object($collection)) {
             return property_exists($collection, $key);
         }
 
@@ -74,9 +72,9 @@ class AccessHelper
     }
 
     /**
-     * @param $collection
-     * @param $key
-     * @param false $magicIsAllowed
+     * @param object|array $collection
+     * @param string|int $key
+     * @param bool $magicIsAllowed
      * @return mixed
      */
     public static function getValue($collection, $key, $magicIsAllowed = false)
@@ -135,9 +133,9 @@ class AccessHelper
     }
 
     /**
-     * @param $collection
-     * @param $key
-     * @param $value
+     * @param object|array $collection
+     * @param string|int $key
+     * @param mixed $value
      * @return mixed
      */
     public static function setValue(&$collection, $key, $value)
@@ -150,8 +148,8 @@ class AccessHelper
     }
 
     /**
-     * @param $collection
-     * @param $key
+     * @param object|array $collection
+     * @param string|int $key
      */
     public static function unsetValue(&$collection, $key): void
     {
@@ -163,7 +161,7 @@ class AccessHelper
     }
 
     /**
-     * @param $collection
+     * @param object|array $collection
      * @return array
      * @throws JSONPathException
      */
@@ -171,9 +169,7 @@ class AccessHelper
     {
         if (is_array($collection)) {
             return array_values($collection);
-        }
-
-        if (is_object($collection)) {
+        } elseif (is_object($collection)) {
             return array_values((array)$collection);
         }
 

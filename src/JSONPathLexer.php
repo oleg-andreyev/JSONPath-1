@@ -47,9 +47,9 @@ class JSONPathLexer
     /**
      * JSONPathLexer constructor.
      *
-     * @param $expression
+     * @param string $expression
      */
-    public function __construct($expression)
+    public function __construct(string $expression)
     {
         $expression = trim($expression);
         $len = strlen($expression);
@@ -92,7 +92,7 @@ class JSONPathLexer
 
             if (($squareBracketDepth === 0) && $char === '.') {
 
-                if ($this->lookAhead($i, 1) === '.') {
+                if ($this->lookAhead($i) === '.') {
                     $tokens[] = new JSONPathToken(JSONPathToken::T_RECURSIVE, null);
                 }
 
@@ -121,7 +121,7 @@ class JSONPathLexer
             if ($squareBracketDepth > 0) {
                 $tokenValue .= $char;
 
-                if ($squareBracketDepth === 1 && $this->lookAhead($i, 1) === ']') {
+                if ($squareBracketDepth === 1 && $this->lookAhead($i) === ']') {
                     $tokens[] = $this->createToken($tokenValue);
                     $tokenValue = '';
                 }
@@ -137,10 +137,11 @@ class JSONPathLexer
                 if ($char === '.' && $dotIndexDepth > 1) {
                     $tokens[] = $this->createToken($tokenValue);
                     $tokenValue = '';
+
                     continue;
                 }
 
-                if ($this->atEnd($i) || in_array($this->lookAhead($i, 1), ['.', '['])) {
+                if ($this->atEnd($i) || in_array($this->lookAhead($i), ['.', '['])) {
                     $tokens[] = $this->createToken($tokenValue);
                     $tokenValue = '';
                     --$dotIndexDepth;
@@ -156,20 +157,20 @@ class JSONPathLexer
     }
 
     /**
-     * @param $pos
+     * @param int $pos
      * @param int $forward
      * @return string|null
      */
-    protected function lookAhead($pos, $forward = 1): ?string
+    protected function lookAhead(int $pos, int $forward = 1): ?string
     {
         return $this->expression[$pos + $forward] ?? null;
     }
 
     /**
-     * @param $pos
+     * @param int $pos
      * @return bool
      */
-    protected function atEnd($pos): bool
+    protected function atEnd(int $pos): bool
     {
         return $pos === $this->expressionLength;
     }
@@ -184,11 +185,11 @@ class JSONPathLexer
     }
 
     /**
-     * @param $value
-     * @return string
+     * @param string $value
+     * @return JSONPathToken|null
      * @throws JSONPathException
      */
-    protected function createToken($value)
+    protected function createToken(string $value): ?JSONPathToken
     {
         if (preg_match('/^(' . static::MATCH_INDEX . ')$/xu', $value, $matches)) {
             if (preg_match('/^-?\d+$/', $value)) {
