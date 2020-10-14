@@ -153,7 +153,7 @@ class AccessHelper
      * @param $collection
      * @param $key
      */
-    public static function unsetValue(&$collection, $key): void
+    public static function unsetValue(&$collection, $key)
     {
         if (is_object($collection) && !$collection instanceof ArrayAccess) {
             unset($collection->$key);

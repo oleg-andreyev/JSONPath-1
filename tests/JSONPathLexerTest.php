@@ -19,7 +19,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_Wildcard(): void
+    public function test_Index_Wildcard()
     {
         $tokens = (new JSONPathLexer('.*'))->parseExpression();
 
@@ -30,7 +30,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_Simple(): void
+    public function test_Index_Simple()
     {
         $tokens = (new JSONPathLexer('.foo'))->parseExpression();
 
@@ -41,7 +41,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_Recursive(): void
+    public function test_Index_Recursive()
     {
         $tokens = (new JSONPathLexer('..teams.*'))->parseExpression();
 
@@ -57,7 +57,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_Complex(): void
+    public function test_Index_Complex()
     {
         $tokens = (new JSONPathLexer('["\'b.^*_"]'))->parseExpression();
 
@@ -68,7 +68,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_BadlyFormed(): void
+    public function test_Index_BadlyFormed()
     {
         $this->expectException(JSONPathException::class);
         $this->expectExceptionMessage('Unable to parse token hello* in expression: .hello*');
@@ -79,7 +79,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_Integer(): void
+    public function test_Index_Integer()
     {
         $tokens = (new JSONPathLexer('[0]'))->parseExpression();
 
@@ -90,7 +90,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_IntegerAfterDotNotation(): void
+    public function test_Index_IntegerAfterDotNotation()
     {
         $tokens = (new JSONPathLexer('.books[0]'))->parseExpression();
 
@@ -103,7 +103,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_Word(): void
+    public function test_Index_Word()
     {
         $tokens = (new JSONPathLexer('["foo$-/\'"]'))->parseExpression();
 
@@ -114,7 +114,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_WordWithWhitespace(): void
+    public function test_Index_WordWithWhitespace()
     {
         $tokens = (new JSONPathLexer('[   "foo$-/\'"     ]'))->parseExpression();
 
@@ -125,7 +125,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Slice_Simple(): void
+    public function test_Slice_Simple()
     {
         $tokens = (new JSONPathLexer('[0:1:2]'))->parseExpression();
 
@@ -136,7 +136,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Index_NegativeIndex(): void
+    public function test_Index_NegativeIndex()
     {
         $tokens = (new JSONPathLexer('[-1]'))->parseExpression();
 
@@ -147,7 +147,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Slice_AllNull(): void
+    public function test_Slice_AllNull()
     {
         $tokens = (new JSONPathLexer('[:]'))->parseExpression();
 
@@ -158,7 +158,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_QueryResult_Simple(): void
+    public function test_QueryResult_Simple()
     {
         $tokens = (new JSONPathLexer('[(@.foo + 2)]'))->parseExpression();
 
@@ -169,7 +169,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_QueryMatch_Simple(): void
+    public function test_QueryMatch_Simple()
     {
         $tokens = (new JSONPathLexer('[?(@.foo < \'bar\')]'))->parseExpression();
 
@@ -180,7 +180,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_QueryMatch_NotEqualTO(): void
+    public function test_QueryMatch_NotEqualTO()
     {
         $tokens = (new JSONPathLexer('[?(@.foo != \'bar\')]'))->parseExpression();
 
@@ -191,7 +191,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_QueryMatch_Brackets(): void
+    public function test_QueryMatch_Brackets()
     {
         $tokens = (new JSONPathLexer("[?(@['@language']='en')]"))->parseExpression();
 
@@ -203,7 +203,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Recursive_Simple(): void
+    public function test_Recursive_Simple()
     {
         $tokens = (new JSONPathLexer('..foo'))->parseExpression();
 
@@ -216,7 +216,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Recursive_Wildcard(): void
+    public function test_Recursive_Wildcard()
     {
         $tokens = (new JSONPathLexer('..*'))->parseExpression();
 
@@ -229,7 +229,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Recursive_BadlyFormed(): void
+    public function test_Recursive_BadlyFormed()
     {
         $this->expectException(JSONPathException::class);
         $this->expectExceptionMessage('Unable to parse token ba^r in expression: ..ba^r');
@@ -240,7 +240,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Indexes_Simple(): void
+    public function test_Indexes_Simple()
     {
         $tokens = (new JSONPathLexer('[1,2,3]'))->parseExpression();
 
@@ -251,7 +251,7 @@ class JSONPathLexerTest extends TestCase
     /**
      * @throws JSONPathException
      */
-    public function test_Indexes_Whitespace(): void
+    public function test_Indexes_Whitespace()
     {
         $tokens = (new JSONPathLexer('[ 1,2 , 3]'))->parseExpression();
 

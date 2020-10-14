@@ -54,7 +54,7 @@ class JSONPathDashedIndexTest extends TestCase
      * @param array $expected
      * @throws Exception
      */
-    public function testSlice(string $path, array $data, array $expected): void
+    public function testSlice(string $path, array $data, array $expected)
     {
         $jsonPath = new JSONPath($data);
         $result = $jsonPath->find($path)->getData();

@@ -31,7 +31,7 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
 
     protected $options;
 
-    public const ALLOW_MAGIC = 1;
+    const ALLOW_MAGIC = 1;
 
     /**
      * @param $data
@@ -212,7 +212,7 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet($offset, $value)
     {
         if ($offset === null) {
             $this->data[] = $value;
@@ -224,7 +224,7 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset($offset)
     {
         AccessHelper::unsetValue($this->data, $offset);
     }
@@ -252,7 +252,7 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     /**
      * Move forward to next element
      */
-    public function next(): void
+    public function next()
     {
         next($this->data);
     }
@@ -280,7 +280,7 @@ class JSONPath implements ArrayAccess, Iterator, JsonSerializable, Countable
     /**
      * Rewind the Iterator to the first element
      */
-    public function rewind(): void
+    public function rewind()
     {
         reset($this->data);
     }

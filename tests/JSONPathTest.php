@@ -24,7 +24,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testChildOperators(): void
+    public function testChildOperators()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$.store.books[0].title');
 
@@ -36,7 +36,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testChildOperatorsAlt(): void
+    public function testChildOperatorsAlt()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find("$['store']['books'][0]['title']");
 
@@ -48,7 +48,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testFilterSliceA(): void
+    public function testFilterSliceA()
     {
         // Copy all items... similar to a wildcard
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find("$['store']['books'][:].title");
@@ -62,7 +62,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testFilterSlice_PositiveEndIndexes(): void
+    public function testFilterSlice_PositiveEndIndexes()
     {
         $result = (new JSONPath(['first', 'second', 'third', 'fourth', 'fifth']))->find('$[0:0]');
         self::assertEquals([], $result->getData());
@@ -89,7 +89,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testFilterSlice_NegativeStartIndexes(): void
+    public function testFilterSlice_NegativeStartIndexes()
     {
         $result = (new JSONPath(['first', 'second', 'third', 'fourth', 'fifth']))->find('$[-2:]');
         self::assertEquals(['fourth', 'fifth'], $result->getData());
@@ -104,7 +104,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testFilterSlice_NegativeEndIndexes(): void
+    public function testFilterSlice_NegativeEndIndexes()
     {
         $result = (new JSONPath(['first', 'second', 'third', 'fourth', 'fifth']))->find('$[:-2]');
         self::assertEquals(['first', 'second', 'third'], $result->getData());
@@ -119,7 +119,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testFilterSlice_NegativeStartAndEndIndexes(): void
+    public function testFilterSlice_NegativeStartAndEndIndexes()
     {
         $result = (new JSONPath(['first', 'second', 'third', 'fourth', 'fifth']))->find('$[-2:-1]');
         self::assertEquals(['fourth'], $result->getData());
@@ -134,7 +134,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testFilterSlice_NegativeStartAndPositiveEnd(): void
+    public function testFilterSlice_NegativeStartAndPositiveEnd()
     {
         $result = (new JSONPath(['first', 'second', 'third', 'fourth', 'fifth']))->find('$[-2:2]');
 
@@ -144,7 +144,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testFilterSlice_StepBy2(): void
+    public function testFilterSlice_StepBy2()
     {
         $result = (new JSONPath(['first', 'second', 'third', 'fourth', 'fifth']))->find('$[0:4:2]');
 
@@ -157,7 +157,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testFilterLastIndex(): void
+    public function testFilterLastIndex()
     {
         $result = (new JSONPath(['first', 'second', 'third', 'fourth', 'fifth']))->find('$[-1]');
 
@@ -170,7 +170,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testFilterSliceG(): void
+    public function testFilterSliceG()
     {
         // Fetch up to the second index
         $result = (new JSONPath(['first', 'second', 'third', 'fourth', 'fifth']))->find('$[:2]');
@@ -185,7 +185,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testChildQuery(): void
+    public function testChildQuery()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$.store.books[(@.length-1)].title');
 
@@ -198,7 +198,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testQueryMatchLessThan(): void
+    public function testQueryMatchLessThan()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$.store.books[?(@.price < 10)].title');
 
@@ -211,7 +211,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testQueryMatchEquals(): void
+    public function testQueryMatchEquals()
     {
         $results = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$..books[?(@.author == "J. R. R. Tolkien")].title');
 
@@ -224,7 +224,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testQueryMatchEqualsWithUnquotedInteger(): void
+    public function testQueryMatchEqualsWithUnquotedInteger()
     {
         $results = (new JSONPath($this->exampleDataWithSimpleIntegers(random_int(0, 1))))->find('$..features[?(@.value = 1)]');
 
@@ -238,7 +238,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testQueryMatchNotEqualsTo(): void
+    public function testQueryMatchNotEqualsTo()
     {
         $results = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$..books[?(@.author != "J. R. R. Tolkien")].title');
         self::assertcount(3, $results);
@@ -258,7 +258,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testWildcardAltNotation(): void
+    public function testWildcardAltNotation()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$.store.books[*].author');
 
@@ -270,7 +270,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testRecursiveChildSearch(): void
+    public function testRecursiveChildSearch()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$..author');
 
@@ -284,7 +284,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testWildCard(): void
+    public function testWildCard()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$.store.*');
         if (is_object($result[0][0])) {
@@ -306,7 +306,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testRecursiveChildSearchAlt(): void
+    public function testRecursiveChildSearchAlt()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$.store..price');
 
@@ -319,7 +319,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testRecursiveChildSearchWithChildIndex(): void
+    public function testRecursiveChildSearchWithChildIndex()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$..books[2].title');
 
@@ -331,7 +331,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testRecursiveChildSearchWithChildQuery(): void
+    public function testRecursiveChildSearchWithChildQuery()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$..books[(@.length-1)].title');
 
@@ -344,7 +344,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testRecursiveChildSearchWithSliceFilter(): void
+    public function testRecursiveChildSearchWithSliceFilter()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$..books[-1:].title');
 
@@ -357,7 +357,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testRecursiveWithQueryMatch(): void
+    public function testRecursiveWithQueryMatch()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$..books[?(@.isbn)].isbn');
 
@@ -370,7 +370,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testRecursiveWithQueryMatchWithDots(): void
+    public function testRecursiveWithQueryMatchWithDots()
     {
         $result = (new JSONPath($this->exampleDataWithDots(random_int(0, 1))))->find(".data.tokens[?(@.Employee.FirstName)]");
         $result = json_decode(json_encode($result), true);
@@ -384,7 +384,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testRecursiveWithWildcard(): void
+    public function testRecursiveWithWildcard()
     {
         $result = (new JSONPath($this->exampleData(random_int(0, 1))))->find('$..*');
         $result = json_decode(json_encode($result), true);
@@ -398,7 +398,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testSimpleArrayAccess(): void
+    public function testSimpleArrayAccess()
     {
         $result = (new JSONPath(['title' => 'test title']))->find('title');
 
@@ -408,7 +408,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testFilteringOnNoneArrays(): void
+    public function testFilteringOnNoneArrays()
     {
         $data = ['foo' => 'asdf'];
         $result = (new JSONPath($data))->find('$.foo.bar');
@@ -419,7 +419,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testMagicMethods(): void
+    public function testMagicMethods()
     {
         $fooClass = new JSONPathTestClass();
         $results = (new JSONPath($fooClass, JSONPath::ALLOW_MAGIC))->find('$.foo');
@@ -430,7 +430,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testMatchWithComplexSquareBrackets(): void
+    public function testMatchWithComplexSquareBrackets()
     {
         $result = (new JSONPath($this->exampleDataExtra()))->find(
             "$['http://www.w3.org/2000/01/rdf-schema#label'][?(@['@language']='en')]['@language']"
@@ -442,7 +442,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testQueryMatchWithRecursive(): void
+    public function testQueryMatchWithRecursive()
     {
         $locations = $this->exampleDataLocations();
         $result = (new JSONPath($locations))->find("..[?(@.type == 'suburb')].name");
@@ -453,7 +453,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testFirst(): void
+    public function testFirst()
     {
         $result = (new JSONPath($this->exampleDataExtra()))->find("$['http://www.w3.org/2000/01/rdf-schema#label'].*");
 
@@ -463,7 +463,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testLast(): void
+    public function testLast()
     {
         $result = (new JSONPath($this->exampleDataExtra()))->find("$['http://www.w3.org/2000/01/rdf-schema#label'].*");
 
@@ -473,7 +473,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testSlashesInIndex(): void
+    public function testSlashesInIndex()
     {
         $result = (new JSONPath($this->exampleDataWithSlashes()))->find("$['mediatypes']['image/png']");
 
@@ -483,7 +483,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testCyrillicText(): void
+    public function testCyrillicText()
     {
         $result = (new JSONPath(["трололо" => 1]))->find("$['трололо']");
         self::assertEquals([1], $result->getData());
@@ -495,7 +495,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testOffsetUnset(): void
+    public function testOffsetUnset()
     {
         $data = [
             "route" => [
@@ -514,7 +514,7 @@ class JSONPathTest extends TestCase
         self::assertEquals("B", $first['name']);
     }
 
-    public function testFirstKey(): void
+    public function testFirstKey()
     {
         // Array test for array
         $jsonPath = new JSONPath(['a' => 'A', 'b', 'B']);
@@ -529,7 +529,7 @@ class JSONPathTest extends TestCase
         self::assertEquals('a', $firstKey);
     }
 
-    public function testLastKey(): void
+    public function testLastKey()
     {
         // Array test for array
         $jsonPath = new JSONPath(['a' => 'A', 'b' => 'B', 'c' => 'C']);
@@ -549,7 +549,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testTrailingComma(): void
+    public function testTrailingComma()
     {
         $jsonPath = new JSONPath(json_decode('{
            "store":{
@@ -598,7 +598,7 @@ class JSONPathTest extends TestCase
      *
      * @throws Exception
      */
-    public function testNegativeIndex(): void
+    public function testNegativeIndex()
     {
         $jsonPath = new JSONPath(json_decode('{
            "store":{
@@ -645,7 +645,7 @@ class JSONPathTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testQueryAccessWithNumericalIndexes(): void
+    public function testQueryAccessWithNumericalIndexes()
     {
         $jsonPath = new JSONPath(json_decode('{
            "result":{
@@ -854,7 +854,7 @@ class JSONPathTestClass
     ];
 
     /** @noinspection MagicMethodsValidityInspection */
-    public function __get($key): ?string
+    public function __get($key)
     {
         return $this->attributes[$key] ?? null;
     }

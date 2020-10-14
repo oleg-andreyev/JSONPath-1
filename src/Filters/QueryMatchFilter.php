@@ -18,7 +18,7 @@ use function strtolower;
 
 class QueryMatchFilter extends AbstractFilter
 {
-    public const MATCH_QUERY_OPERATORS = '
+    const MATCH_QUERY_OPERATORS = '
       @(\.(?<key>[^ =]+)|\[["\']?(?<keySquare>.*?)["\']?\])
       (\s*(?<operator>==|=|<>|!==|!=|>|<)\s*(?<comparisonValue>.+))?
     ';
